@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.c                                           :+:      :+:    :+:   */
+/*   server_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kel-bahr <kel-bahr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/27 01:25:49 by kel-bahr          #+#    #+#             */
-/*   Updated: 2025/03/27 11:10:21 by kel-bahr         ###   ########.fr       */
+/*   Created: 2025/03/27 01:24:51 by kel-bahr          #+#    #+#             */
+/*   Updated: 2025/03/27 11:16:54 by kel-bahr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "minitalk_bonus.h"
 
 static void	ft_handle(int signal, siginfo_t *info, void *context)
 {
@@ -32,6 +32,8 @@ static void	ft_handle(int signal, siginfo_t *info, void *context)
 	read_bit++;
 	if (read_bit == 8)
 	{
+		if (c == '\0')
+			ft_kill(s_pid, SIGUSR2);
 		write(1, &c, 1);
 		read_bit = 0;
 		c = 0;
@@ -53,7 +55,7 @@ int	main(int ac, char **av)
 	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = SA_SIGINFO;
 	if (sigaction(SIGUSR1, &sa, NULL) < 0 || sigaction(SIGUSR2, &sa, NULL) < 0)
-		ft_exrror ("Error : sigaction failed!\n");
+		ft_exrror("Error : sigaction failed!\n");
 	while (1)
 		pause();
 }

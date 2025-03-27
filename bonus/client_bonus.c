@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   client.c                                           :+:      :+:    :+:   */
+/*   client_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kel-bahr <kel-bahr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/27 01:23:37 by kel-bahr          #+#    #+#             */
-/*   Updated: 2025/03/27 11:12:20 by kel-bahr         ###   ########.fr       */
+/*   Created: 2025/03/27 01:23:28 by kel-bahr          #+#    #+#             */
+/*   Updated: 2025/03/27 11:20:44 by kel-bahr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "minitalk_bonus.h"
 
-static void	send_bits(char m, int pid)
+static void	send_bits(unsigned char m, int pid)
 {
 	int	i;
 	int	bits[8];
@@ -36,6 +36,12 @@ static void	send_bits(char m, int pid)
 	}
 }
 
+static void	s_done(int signum)
+{
+	(void)signum;
+	ft_printf("done !\n");
+}
+
 static void	handler(int signum)
 {
 	(void)signum;
@@ -52,7 +58,8 @@ int	main(int ac, char **av)
 	if (!is_valid_number(av[1]))
 		ft_exrror("Error : invalid PID!\n");
 	pid = ft_atoi(av[1]);
-	if (signal(SIGUSR1, handler) == SIG_ERR)
+	if (signal(SIGUSR1, handler) == SIG_ERR
+		|| signal(SIGUSR2, s_done) == SIG_ERR)
 		ft_exrror("Error : signal failed!\n");
 	while (av[2][i])
 		send_bits(av[2][i++], pid);
