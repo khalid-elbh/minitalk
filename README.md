@@ -31,12 +31,12 @@ make
 ./client <SERVER_PID> "Hello, Minitalk!"
 ```
 ## ⚙️ Allowed Functions
-✅ write, ft_printf (or a custom equivalent)
-✅ signal, sigemptyset, sigaddset, sigaction
-✅ kill, getpid
-✅ malloc, free
-✅ pause, sleep, usleep
-✅ exit
+- `write`, `ft_printf` (or a custom equivalent)
+- `signal`, `sigemptyset`, `sigaddset`, `sigaction`
+- `kill`, `getpid`
+- `malloc`, `free`
+- `pause`, `sleep`, `usleep`
+- `exit`
 ## 📂 Project Structure
 ```sh
 .
